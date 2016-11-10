@@ -72,5 +72,46 @@ public class CategoriaDAO {
         return ArrCat;
     }
     
+    public void Atualiza(Categoria ct){
+        Connection con = new Conexao().getConn();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con. prepareStatement("UPDATE categoria SET nome_cate = ? WHERE id_categoria = ?");
+            stmt.setString(1, ct.getNome_cat());
+            stmt.setInt(2, ct.getId_categoria());
+            
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void Deleta(Categoria ct){
+        Connection con = new Conexao().getConn();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("DELETE FROM categoria WHERE id_categoria = ?");
+            stmt.setInt(1, ct.getId_categoria());
+            
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     
 }
